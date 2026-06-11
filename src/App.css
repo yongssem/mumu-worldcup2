@@ -1,0 +1,447 @@
+/* 무무월드컵2 — 화면 스타일 (모바일 우선) */
+
+/* ── 푸터 ── */
+.footer {
+  text-align: center;
+  color: #64748b;
+  font-size: 12px;
+  padding-bottom: 24px;
+  padding-top: 12px;
+}
+.footer a { color: #64748b; }
+
+/* ── 랜딩 ── */
+.landing {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70dvh;
+  overflow: hidden;
+}
+.landing-bg {
+  position: absolute;
+  inset: 0;
+  /* 실제 이미지 있으면 사용, 없으면 잔디 그라데이션 fallback */
+  background-image: url('/bg-landing.png');
+  background-color: var(--pitch-mid);
+  background-image:
+    url('/bg-landing.png'),
+    radial-gradient(120% 80% at 50% -10%, #1f9b54 0%, #0c3a22 55%, #07140d 100%);
+  background-size: cover, cover;
+  background-position: center, center;
+}
+.landing-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 20, 13, 0.25) 0%, rgba(7, 20, 13, 0.85) 100%);
+}
+.landing-content {
+  position: relative;
+  text-align: center;
+  padding: 32px 24px;
+  width: 100%;
+}
+.landing-kicker {
+  color: var(--ball);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+.landing-title {
+  font-size: 56px;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+.landing-title .title-2 {
+  color: var(--ball);
+  margin-left: 4px;
+}
+.landing-desc {
+  color: var(--text-dim);
+  margin: 16px 0 28px;
+  line-height: 1.6;
+}
+.landing-hint {
+  margin-top: 20px;
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), #fb923c);
+  color: #1a0f02;
+  font-weight: 800;
+  font-size: 18px;
+  padding: 16px 40px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.4);
+  transition: transform 0.1s;
+}
+.btn-primary:active { transform: scale(0.96); }
+
+.record-card {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 28px;
+}
+.record-item {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.record-item span {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* ── 게임 ── */
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  flex: 1;
+}
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.exit-btn {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.score {
+  font-size: 22px;
+  font-weight: 800;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.team-home { color: var(--home); }
+.team-away { color: var(--away); }
+.score-sep { color: var(--text-dim); }
+.turn-pill {
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.event-bar {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--surface);
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.event-bar.goal { background: rgba(251, 191, 36, 0.22); color: var(--ball); font-weight: 800; }
+
+/* ── 점수판 (90년대 게임판 느낌) ── */
+.score-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1a120a;
+  border: 2px solid #fbbf24;
+  border-radius: 10px;
+  padding: 4px 14px;
+}
+.sc {
+  font-family: var(--display);
+  font-size: 26px;
+  min-width: 22px;
+  text-align: center;
+}
+.sc-home { color: #60a5fa; }
+.sc-away { color: #f87171; }
+.sc-sep { color: var(--text-dim); }
+
+/* ── 게임판 테두리 (노랑+빨강 레트로 프레임) ── */
+.board-frame {
+  position: relative;
+  border-radius: 14px;
+  padding: 8px;
+  background:
+    repeating-linear-gradient(45deg, #e11d2a 0 10px, #ffd21f 10px 20px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+.board-frame::before {
+  /* 안쪽 노란 띠 */
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 4px solid #ffd21f;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 2;
+}
+.pitch {
+  display: block;
+  width: 100%;
+  aspect-ratio: 360 / 560;
+  border-radius: 6px;
+  touch-action: none;
+}
+.turn-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.55);
+  color: #ffd21f;
+  font-weight: 800;
+  padding: 8px 18px;
+  border-radius: 999px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ── 하단 컨트롤 ── */
+.control-bar {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tip {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.tip b { color: var(--ball); }
+.tip.dim { color: var(--text-dim); }
+
+@media (min-width: 420px) {
+  .landing-title { font-size: 64px; }
+}
+
+/* ══════════ 공통 화면(모드/토너먼트) ══════════ */
+.screen { width: 100%; flex: 1; }
+.center-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 32px 20px;
+  text-align: center;
+  position: relative;
+}
+.screen-title { font-size: 30px; margin: 0; }
+.screen-hint { color: var(--text-dim); font-size: 13px; margin: 0; }
+.back-link {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: var(--surface);
+  color: var(--text-dim);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.btn-ghost {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-weight: 700;
+  font-size: 16px;
+}
+.btn-primary.big { font-size: 20px; padding: 18px 48px; }
+.end-btns { display: flex; gap: 12px; }
+
+/* 모드 카드 */
+.mode-cards { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+.mode-card {
+  width: 180px;
+  background: var(--surface);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  transition: transform 0.1s, border-color 0.15s;
+}
+.mode-card:active { transform: scale(0.97); }
+.mode-card.p1 { border-color: rgba(59,130,246,0.5); }
+.mode-card.p2 { border-color: rgba(239,68,68,0.5); }
+.mode-emoji { font-size: 48px; }
+.mode-title { font-family: var(--display); font-size: 24px; }
+.mode-desc { color: var(--text-dim); font-size: 13px; line-height: 1.5; }
+
+/* 토너먼트 진행 단계 */
+.round-steps { display: flex; gap: 8px; }
+.step {
+  min-width: 48px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 700;
+}
+.step.done { background: rgba(34,197,94,0.2); color: #4ade80; }
+.step.now { background: var(--ball); color: #1a0f02; }
+
+/* VS 카드 */
+.vs-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 20px 24px;
+}
+.vs-team { display: flex; flex-direction: column; gap: 6px; min-width: 130px; }
+.vs-flag { font-size: 18px; font-weight: 800; }
+.vs-tag { font-size: 12px; color: var(--text-dim); }
+.vs-team.home .vs-tag { color: #60a5fa; }
+.vs-team.away .vs-tag { color: #f87171; }
+.vs-mid { font-family: var(--display); font-size: 28px; color: var(--ball); }
+.round-label { color: var(--text-dim); font-size: 14px; margin: 0; }
+
+/* 우승/탈락 */
+.trophy { font-size: 80px; animation: pop 0.5s ease; }
+.champ-title { font-family: var(--display); font-size: 44px; margin: 0; color: var(--ball); }
+.champ-sub { color: var(--text-dim); line-height: 1.6; margin: 0; }
+@keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+/* ══════════ 게임 화면 (가로 풀스크린) ══════════ */
+.game-screen {
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+.game-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  flex-shrink: 0;
+}
+.game-hud .score-panel { gap: 8px; }
+.team-name { font-size: 14px; font-weight: 700; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.team-name.home { color: #60a5fa; }
+.team-name.away { color: #f87171; }
+
+.board-wrap {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 8px 12px;
+  position: relative;
+}
+.pitch {
+  aspect-ratio: 960 / 600;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  border: 7px solid #ffd21f;
+  outline: 5px solid #e11d2a;
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.55);
+  touch-action: none;
+}
+
+.game-foot { flex-shrink: 0; padding: 8px 14px 14px; display: flex; justify-content: center; }
+.turn-tip {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.turn-dot { width: 12px; height: 12px; border-radius: 50%; }
+.turn-tip.home .turn-dot { background: var(--home); }
+.turn-tip.away .turn-dot { background: var(--away); }
+.tip-sub { color: var(--text-dim); font-weight: 400; font-size: 13px; }
+
+/* 골 스플래시 */
+.goal-splash {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 5;
+  pointer-events: none;
+  animation: goalFlash 1.7s ease;
+}
+.goal-splash.home { background: radial-gradient(circle, rgba(37,99,235,0.35), rgba(7,20,13,0.7)); }
+.goal-splash.away { background: radial-gradient(circle, rgba(239,68,68,0.35), rgba(7,20,13,0.7)); }
+.goal-big {
+  font-family: var(--display);
+  font-size: clamp(48px, 12vw, 110px);
+  color: #fff;
+  text-shadow: 0 0 24px var(--ball);
+  animation: goalPop 0.6s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.goal-team { font-size: clamp(18px, 4vw, 30px); font-weight: 800; color: var(--ball); }
+@keyframes goalPop {
+  0% { transform: scale(0.2) rotate(-8deg); opacity: 0; }
+  60% { transform: scale(1.15) rotate(3deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes goalFlash {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* 경기 종료 오버레이 */
+.end-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(7, 20, 13, 0.78);
+  z-index: 6;
+}
+.end-card {
+  background: var(--surface);
+  border: 2px solid var(--ball);
+  border-radius: 20px;
+  padding: 28px 36px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+.end-card h2 { font-size: 32px; margin: 0; }
+.end-score { font-family: var(--display); font-size: 36px; margin: 0; }

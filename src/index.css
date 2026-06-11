@@ -1,0 +1,63 @@
+/* 무무월드컵2 — 전역 스타일 & 디자인 토큰 */
+:root {
+  --pitch-dark: #0a2818;
+  --pitch-mid: #15803d;
+  --pitch-light: #1a9348;
+  --line: #e7f6ec;
+  --home: #3b82f6;
+  --away: #ef4444;
+  --ball: #fbbf24;
+  --accent: #f97316;
+  --bg: #07140d;
+  --surface: #0f2418;
+  --text: #f8fafc;
+  --text-dim: #94a3b8;
+
+  --radius: 16px;
+  --display: 'Black Han Sans', 'Pretendard', sans-serif;
+  --body: 'Pretendard', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  overscroll-behavior: none;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  font-family: var(--body);
+  cursor: pointer;
+  border: none;
+  color: inherit;
+}
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* 모바일 우선: 앱 컨테이너 폭 제한 (데스크탑에서도 폰처럼) */
+.app-shell {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
