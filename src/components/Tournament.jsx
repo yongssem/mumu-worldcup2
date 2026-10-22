@@ -34,7 +34,8 @@ export default function Tournament({ tournament: t, onPlay, onRestart, onHome })
   return (
     <div className="screen center-screen">
       <button className="back-link" onClick={onHome}>← 나가기</button>
-      <h2 className="screen-title">월드컵 16강</h2>
+      <p className="landing-kicker">ROAD TO THE TROPHY</p>
+      <h1 className="screen-title">정상까지, {4 - t.roundIdx}번의 승리.</h1>
 
       {/* 라운드 진행 단계 */}
       <div className="round-steps">
@@ -60,6 +61,8 @@ export default function Tournament({ tournament: t, onPlay, onRestart, onHome })
 
       <p className="round-label">{roundName(t)} · {ROUND_NAMES.length - t.roundIdx}경기 남음</p>
       <button className="btn-primary big" onClick={onPlay}>경기 시작 ▶</button>
+      <p className="screen-hint">라운드 자동 저장 · 경기 중 나가면 해당 경기를 다시 시작해요</p>
+      <details className="bracket" open><summary>월드컵 전체 대진표</summary><div className="bracket-rounds">{ROUND_NAMES.map((name, i) => <section key={name}><h3>{name}</h3>{t.rounds[i] ? t.rounds[i].map((m, j) => <div className={`bracket-match ${j === 0 ? 'player-match' : ''}`} key={j}><span className={m.winner === m.a ? 'winner' : ''}>{m.a}<b>{m.winner === m.a ? '✓' : ''}</b></span><span className={m.winner === m.b ? 'winner' : ''}>{m.b}<b>{m.winner === m.b ? '✓' : ''}</b></span></div>) : <p className="bracket-wait">이전 라운드 종료 후 결정</p>}</section>)}</div></details>
     </div>
   );
 }

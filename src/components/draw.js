@@ -16,19 +16,19 @@ export function drawBoard(ctx, world, aim) {
 
 // 초록 잔디 + 노란 점박이
 function field(ctx) {
-  ctx.fillStyle = '#3fa047';
+  ctx.fillStyle = '#24634c';
   ctx.fillRect(0, 0, FW, FH);
-  ctx.fillStyle = 'rgba(255,255,255,0.04)';
-  for (let x = 0; x < FW; x += 64) ctx.fillRect(x, 0, 32, FH); // 세로 줄무늬
-  ctx.fillStyle = 'rgba(255,221,51,0.5)';
-  const gap = 26;
+  ctx.fillStyle = 'rgba(255,255,255,0.035)';
+  for (let x = 0; x < FW; x += 192) ctx.fillRect(x, 0, 96, FH);
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  const gap = 30;
   for (let r = 0; r * gap < FH; r++) {
     for (let c = 0; c * gap < FW; c++) {
       const x = c * gap + (r % 2 ? gap / 2 : 0) + 10;
       const y = r * gap + 16;
       if (x > FW - 4) continue;
       ctx.beginPath();
-      ctx.arc(x, y, 2, 0, Math.PI * 2);
+      ctx.arc(x, y, 0.7, 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -72,7 +72,7 @@ function goals(ctx) {
       ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + dir * depth, y); ctx.stroke();
     }
     // 빨간 골대 프레임
-    ctx.strokeStyle = '#e11d2a';
+    ctx.strokeStyle = '#e9c674';
     ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.moveTo(x, GY0); ctx.lineTo(x + dir * depth, GY0);
@@ -87,7 +87,7 @@ function piece(ctx, p, active) {
   if (active) {
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r + 5, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255,221,51,0.5)';
+    ctx.fillStyle = 'rgba(233,198,116,0.5)';
     ctx.fill();
   }
   ctx.beginPath();

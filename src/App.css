@@ -24,10 +24,8 @@
   position: absolute;
   inset: 0;
   /* 실제 이미지 있으면 사용, 없으면 잔디 그라데이션 fallback */
-  background-image: url('/bg-landing.png');
   background-color: var(--pitch-mid);
   background-image:
-    url('/bg-landing.png'),
     radial-gradient(120% 80% at 50% -10%, #1f9b54 0%, #0c3a22 55%, #07140d 100%);
   background-size: cover, cover;
   background-position: center, center;

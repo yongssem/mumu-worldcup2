@@ -43,6 +43,8 @@ export function createWorld() {
     phase: 'aim',          // 'aim' | 'sim' | 'ended'
     score: { home: 0, away: 0 },
     turnCount: 0,
+    turnLimit: MAX_TURNS,
+    overtime: 0,
     message: '',
     aim: null,
   };
@@ -67,7 +69,7 @@ const speed = (e) => Math.hypot(e.vx, e.vy);
 // 한 조각 튕기기
 export function flick(world, id, vx, vy) {
   const e = world.pieces.find((p) => p.id === id);
-  if (!e) return;
+  if (!e || world.phase !== 'aim' || e.team !== world.turn || !Number.isFinite(vx) || !Number.isFinite(vy)) return;
   const sp = Math.hypot(vx, vy);
   if (sp > MAX_SPEED) { vx = (vx / sp) * MAX_SPEED; vy = (vy / sp) * MAX_SPEED; }
   e.vx = vx; e.vy = vy;
@@ -78,7 +80,8 @@ export function flick(world, id, vx, vy) {
 // 원-원 충돌 (질량 반영 탄성)
 function collide(a, b) {
   let dx = b.x - a.x, dy = b.y - a.y;
-  let dist = Math.hypot(dx, dy) || 0.0001;
+  let dist = Math.hypot(dx, dy);
+  if (dist < 0.0001) { dx = 0.0001; dy = 0; dist = 0.0001; }
   const overlap = a.r + b.r - dist;
   if (overlap <= 0) return;
   const nx = dx / dist, ny = dy / dist;
@@ -135,10 +138,7 @@ export function step(world) {
 // 턴 종료. world.phase==='ended'면 경기 끝
 export function endTurn(world) {
   world.turnCount += 1;
-  if (world.turnCount >= MAX_TURNS) {
-    world.phase = 'ended';
-    return;
-  }
+  if (world.turnCount >= (world.turnLimit || MAX_TURNS)) world.phase = 'ended';
   world.turn = world.turn === 'home' ? 'away' : 'home';
-  world.phase = 'aim';
+  if (world.phase !== 'ended') world.phase = 'aim';
 }
