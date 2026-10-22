@@ -8,6 +8,7 @@ import { createTournament, advance, currentOpponent, aiDifficulty } from './game
 import { saveResult, saveTitle, loadTournament, saveTournament } from './game/storage.js';
 import Guide from './components/Guide.jsx';
 import Icon from './components/Icons.jsx';
+import Modal from './components/Modal.jsx';
 import { PLAYER_TEAM } from './game/constants.js';
 import './App.css';
 
@@ -18,10 +19,20 @@ export default function App() {
   const [guide, setGuide] = useState(false);
   const [notice, setNotice] = useState('');
   const [fullscreen, setFullscreen] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState(null);
+  const [installGuide, setInstallGuide] = useState(false);
+  const [installed, setInstalled] = useState(() => window.matchMedia('(display-mode: standalone)').matches || Boolean(navigator.standalone));
   const [game, setGame] = useState(null);     // {mode, p1, p2, difficulty}
   const [gameKey, setGameKey] = useState(0);  // 매치마다 Game 리셋
 
   useEffect(() => { if (tournament) saveTournament(tournament); }, [tournament]);
+  useEffect(() => {
+    const available = (event) => { event.preventDefault(); setInstallPrompt(event); };
+    const completed = () => { setInstalled(true); setInstallPrompt(null); setInstallGuide(false); setNotice('홈 화면에 설치했어요. 아이콘을 눌러 다시 만나요!'); };
+    window.addEventListener('beforeinstallprompt', available);
+    window.addEventListener('appinstalled', completed);
+    return () => { window.removeEventListener('beforeinstallprompt', available); window.removeEventListener('appinstalled', completed); };
+  }, []);
   useEffect(() => {
     const change = () => setFullscreen(Boolean(document.fullscreenElement));
     document.addEventListener('fullscreenchange', change);
@@ -54,6 +65,13 @@ export default function App() {
       else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
       else setNotice('이 브라우저에서는 전체화면을 지원하지 않아요. 가로로 돌리면 더 넓게 즐길 수 있어요.');
     } catch { setNotice('전체화면을 열 수 없어요. 브라우저 설정을 확인해 주세요.'); }
+  }
+
+  async function install() {
+    if (!installPrompt) { setInstallGuide(true); return; }
+    try { await installPrompt.prompt(); await installPrompt.userChoice; }
+    catch { setInstallGuide(true); }
+    finally { setInstallPrompt(null); }
   }
 
   function startMode(mode) {
@@ -113,7 +131,7 @@ export default function App() {
         />
       ) : (
         <div className="app-shell">
-          {screen === 'landing' && <Landing onStart={() => setScreen('mode')} onGuide={() => setGuide(true)} canResume={tournament?.status === 'playing'} onResume={() => setScreen('tournament')} />}
+          {screen === 'landing' && <Landing onStart={() => setScreen('mode')} onGuide={() => setGuide(true)} canResume={tournament?.status === 'playing'} onResume={() => setScreen('tournament')} onInstall={install} installed={installed} />}
           {screen === 'mode' && (
             <ModeSelect onSelect={startMode} onBack={() => setScreen('landing')} />
           )}
@@ -129,6 +147,7 @@ export default function App() {
         </div>
       )}
       {guide && <Guide onClose={() => setGuide(false)} />}
+      {installGuide && <Modal title="홈 화면에서 바로 만나요" onClose={() => setInstallGuide(false)}><p>브라우저에 맞는 방법으로 게임 바로가기를 추가해 주세요.</p><ul className="install-guide"><li><strong>iPhone · iPad Safari</strong><br />공유 메뉴 → 홈 화면에 추가</li><li><strong>Android Chrome</strong><br />브라우저 메뉴 → 홈 화면에 추가 또는 앱 설치</li><li><strong>PC Chrome · Edge</strong><br />주소창 설치 아이콘 또는 브라우저 메뉴의 앱 설치 항목</li></ul><p>설치 메뉴가 없다면 Safari나 Chrome에서 링크를 다시 열어 주세요. 설치 후에도 플레이에는 인터넷 연결이 필요해요.</p><button className="btn-primary" onClick={() => setInstallGuide(false)}>확인</button></Modal>}
     </>
   );
 }

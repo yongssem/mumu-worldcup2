@@ -1,15 +1,11 @@
 import { loadRecord } from '../game/storage.js';
 import Icon from './Icons.jsx';
-import BoardPreview from './BoardPreview.jsx';
 
 // 무무월드컵2 — 랜딩(히어로) 화면
-export default function Landing({ onStart, onGuide, onResume, canResume }) {
+export default function Landing({ onStart, onGuide, onResume, canResume, onInstall, installed }) {
   const rec = loadRecord();
   return (
     <main className="landing">
-      {/* 배경: public/bg-landing.png 있으면 사용, 없으면 잔디 그라데이션 fallback */}
-      <div className="landing-bg" />
-      <div className="landing-overlay" />
 
       <div className="landing-content">
         <p className="landing-kicker"><span className="live-dot" /> 손끝에서 시작되는 월드컵</p>
@@ -31,8 +27,12 @@ export default function Landing({ onStart, onGuide, onResume, canResume }) {
         </div>
         <p className="landing-hint">이 브라우저의 1인 월드컵 기록 · 자동 저장</p>
       </div>
-      <BoardPreview />
+      <figure className="landing-art">
+        <img src="/landing-stadium.webp" srcSet="/landing-stadium-mobile.webp 768w, /landing-stadium.webp 1536w" sizes="(max-width: 600px) calc(100vw - 48px), (max-width: 1200px) 48vw, 580px" width="1536" height="1024" fetchpriority="high" decoding="async" alt="경기장 조명 아래 잔디 위에서 축구공을 두고 마주 선 파란색과 빨간색 축구게임 조각" />
+        <figcaption><span>THE STAGE IS YOURS.</span><span>오늘의 역전 골, 당신의 손끝에서.</span></figcaption>
+      </figure>
       <div className="landing-strip"><span>01 <b>당겨서 슛</b></span><span>02 <b>혼자 또는 둘이</b></span><span>03 <b>네 번 이기면 챔피언</b></span></div>
+      <div className="landing-extras"><button className="text-btn" onClick={onInstall} disabled={installed}>{installed ? '홈 화면 앱으로 실행 중' : '홈 화면에 설치'} <Icon name="arrow" size={16} /></button><a href="https://www.instagram.com/yongssam.dev/" target="_blank" rel="noopener noreferrer">바이브용쌤 인스타 ↗</a></div>
     </main>
   );
 }

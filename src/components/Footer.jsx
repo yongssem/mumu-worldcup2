@@ -2,8 +2,7 @@
 export default function Footer() {
   return (
     <footer className="footer">
-      © 2026 무궁무진클래스 · 용쌤 ·{' '}
-      <a href="https://mumuclass.kr" target="_blank" rel="noreferrer">mumuclass.kr</a>
+      © 2026 <a href="https://www.mumuclass.kr/" target="_blank" rel="noopener noreferrer">무궁무진 클래스</a> · 용쌤
     </footer>
   );
 }
